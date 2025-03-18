@@ -21,7 +21,7 @@ This project is a simple Node.js web server that serves different HTML pages bas
 1.  **Clone the Repository:**
 
     ```bash
-    git clone https://github.com/JohanDC-1999/node-basic-info-site.git  # Replace with your actual repository URL
+    git clone https://github.com/JohanDC-1999/node-basic-info-site.git 
     cd node-basic-info-site
     ```
 
