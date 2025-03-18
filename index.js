@@ -2,7 +2,7 @@ const { readFile } = require('fs');
 const http = require('http');
 const path = require('path');
 const hostname = '127.0.0.1';
-const port = 3000;
+const port = 8080;
 
 const types = {
     html: 'text/html',
