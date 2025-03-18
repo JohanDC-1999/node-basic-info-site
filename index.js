@@ -1,46 +1,41 @@
-const { readFile } = require('fs');
+const fs = require('fs');
 const http = require('http');
 const path = require('path');
-const hostname = '127.0.0.1';
-const port = 8080;
 
-const types = {
-    html: 'text/html',
-    css: 'text/css',
-    js: 'application/javascript',
-    png: 'image/png',
-    jpg: 'image/jpeg',
-    jpeg: 'image/jpeg',
-    gif: 'image/gif',
-    json: 'application/json',
-    xml: 'application/xml',
-  };
+const PORT = 8080;
 
+// Create the server
 const server = http.createServer((req, res) => {
-    let fileName = req.url;
+    // Log the request information
     console.log(`${req.method} ${req.url}`);
-    let extension = path.extname(req.url).slice(1);
-    if(!extension){
-        extension = 'html';
-        fileName = fileName + '.html'
-    }
-    console.log(extension);
-    
-    if(req.url === '/') fileName = 'index.html';
 
-    readFile(path.join(__dirname, fileName), (err, data) => {
+    // Set the filename to request url or index.html if no page specified
+    let fileName = req.url === '/' ? 'index.html' : req.url;
+
+    // Append .html if missing
+    if(fileName.indexOf('.html') === -1) fileName+='.html';
+
+    // Read the file - use .join to find the correct location in directory
+    fs.readFile(path.join(__dirname, fileName), (err, data) => {
         if(err){
-            res.writeHead(404, { 'Content-Type': 'text/html' });
-            res.end('404: File not found');
+            // If page requested not found - show the 404.html page
+            fs.readFile(path.join(__dirname, '404.html'), (err, data) => {
+                if(err){
+                    res.writeHead(404, { 'Content-Type' : 'text/plain' });
+                    res.end('404: File not found (and 404.html missing!)');
+                } else {
+                    res.writeHead(404, { 'Content-Type': 'text/html' });
+                    res.end(data);
+                }
+            })
         } else {
-            res.writeHead(200, { 'Content-Type': types[extension] });
+            res.writeHead(200, { 'Content-Type': 'text/html' });
             res.end(data);
         }
     })
 })
 
-
-
-server.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
+// Listen on the specified port
+server.listen(PORT, () => {
+    console.log(`Server started → Listening on port ${PORT}`);
 })
