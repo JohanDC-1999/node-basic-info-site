@@ -46,16 +46,6 @@ This project is a simple Node.js web server that serves different HTML pages bas
 
 ## Project Structure
 
-The project directory should have a structure similar to this:
-node-basic-info-site/
-├── index.js
-├── index.html
-├── about.html
-├── contact-me.html
-└── 404.html
-└── README.md
-
-
 *   `index.js` (or your main server file): Contains the Node.js code that creates the HTTP server, handles requests, reads files, and sends responses.
 *   `index.html`, `about.html`, `contact-me.html`, `404.html`:  These are the HTML files that the server serves.
 
